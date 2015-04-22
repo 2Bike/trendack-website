@@ -4,7 +4,7 @@ import mysql.connector
 def store(name, woeid):
 
     # Open database connection
-    db = mysql.connector.connect(user='root', password='DiuKc050',
+    db = mysql.connector.connect(user='root', password='',
                               host='localhost',
                               database='trendack')
 
