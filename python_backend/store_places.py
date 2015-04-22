@@ -1,10 +1,12 @@
 
-import MySQLdb
+import mysql.connector
 
 def store(name, woeid):
 
-    # Open database connection (enter the details!)
-    db = MySQLdb.connect("localhost","root"," ","trendack" )
+    # Open database connection
+    db = mysql.connector.connect(user='root', password='DiuKc050',
+                              host='localhost',
+                              database='trendack')
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -25,6 +27,6 @@ def store(name, woeid):
        db.rollback()
        print "error"
 
-
+    cursor.close()
     # disconnect from server
     db.close()
