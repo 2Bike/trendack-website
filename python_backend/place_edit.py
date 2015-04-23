@@ -3,13 +3,16 @@ import tweepy
 from tweepy.auth import OAuthHandler
 from time import time, sleep
 import store_places
+import config
+
 
 #Twitter API Keys
+config.config()
 
-ckey = 'aL2farMDkmgVNwPyqd4rOrfya'
-csecret = '3DrS33hv732PA1cinlkQaSZddduah4ZclHEv7wf31x9l31qa8h'
-atoken = '2601808146-wCNJuIhAKNN6A6dkvFdLzxXXw2BfLvBvVHSMtrs'
-asecret = 'VlbjVDzCHzEfwsnBU5clvxeXVu0UEFXL1z80j57yfPZkP'
+ckey = config.ckey
+csecret = config.csecret
+atoken = config.atoken
+asecret = config.asecret
 
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
