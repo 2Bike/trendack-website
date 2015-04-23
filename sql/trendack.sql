@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2015 at 09:46 PM
+-- Generation Time: Apr 23, 2015 at 05:26 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -117,7 +117,7 @@ DROP TABLE IF EXISTS `trends`;
 CREATE TABLE IF NOT EXISTS `trends` (
 `id` int(11) NOT NULL,
   `trend` varchar(40) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=232 ;
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ ALTER TABLE `stream`
 -- Indexes for table `trends`
 --
 ALTER TABLE `trends`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `trend` (`trend`);
 
 --
 -- Indexes for table `tweets`
@@ -180,7 +180,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `trends`
 --
 ALTER TABLE `trends`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=232;
 --
 -- AUTO_INCREMENT for table `tweets`
 --
