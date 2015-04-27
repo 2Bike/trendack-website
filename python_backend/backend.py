@@ -3,8 +3,12 @@ from tweepy.auth import OAuthHandler
 import mysql.connector
 import store_trend
 import store_stream
+import store_tweets
 from time import time, sleep
 import config
+import warnings
+
+warnings.filterwarnings('ignore')
 
 
 #Twitter API Keys
@@ -52,17 +56,15 @@ while row is not None:
         try:
                 
             store_trend.store (name)
-            
-
-        
 
         except:
             print "error2"
 
 
     store_stream.store(names, row[0])
+    store_tweets.store(names, row[0])
     
     row = cursor.fetchone()
-    sleep(60)
+    sleep(90)
             
 
