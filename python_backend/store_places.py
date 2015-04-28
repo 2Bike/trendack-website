@@ -1,12 +1,17 @@
-
+import config
 import mysql.connector
 
 def store(name, woeid):
 
+    #GET the config attributes
+    config.config()
+
     # Open database connection
-    db = mysql.connector.connect(user='root', password='',
-                              host='localhost',
-                              database='trendack')
+    db = mysql.connector.connect(user=config.user, password=config.password,
+                            host=config.host,
+                            database=config.db)
+
+
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
