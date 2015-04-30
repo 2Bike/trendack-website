@@ -7,7 +7,7 @@ def config():
     global db
     
     user = 'root'
-    password = ''
+    password = 'DiuKc050'
     host = 'localhost'
     db = 'trendack'
 

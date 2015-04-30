@@ -37,6 +37,13 @@ agentsListSpeed : 0,        // Integer: fade in/fade out delay in miliseconds; 0
 
 */
 
+function replaceSpecialCharacters( mystring )  
+{ return mystring.replace(/#/g, "&#35;").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+
+function replaceNormalCharacters( mystring )
+{ return mystring.replace("&#35;", "#").replace("&amp;", "&").replace("&gt;", ">").replace("&lt;", "<").replace("&quot;", "\""); }
+
+
 $(function($){
     $('#map-europe').cssMap({'cities' : true, 'size' : 960, 'onClick': function(e){
       var link = e.children('a').attr('href'),        // get link's URL; 
@@ -47,20 +54,25 @@ $(function($){
           document.getElementById("trends-at").textContent = "Trends at " + text;
           
           //Hits the JSON service and created the 10-trend list
-          getJSON('http://localhost/~thomashenryspiteri/sw-trendack/assets/json-samples/json_trends4country.php'
+          var url = "http://localhost/foo/jason.php";
+        
+          url = url + "?country=";
+          url = url + text;
+          
+          getJSON(url
           ,function(data) {
             document.getElementById("trends-list").innerHTML = 
-            "<ul><li><a href='#1' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_1) + "\")'>"  
-            + data.trends.trend_1 + "</a></li><li><a href='#2' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_2) + "\")'>" 
-            + data.trends.trend_2 + "</a></li><li><a href='#3' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_3) + "\")'>" 
-            + data.trends.trend_3 + "</a></li><li><a href='#4' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_4) + "\")'>" 
-            + data.trends.trend_4 + "</a></li><li><a href='#5' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_5) + "\")'>" 
-            + data.trends.trend_5 + "</a></li><li><a href='#6' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_6) + "\")'>" 
-            + data.trends.trend_6 + "</a></li><li><a href='#7' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_7) + "\")'>" 
-            + data.trends.trend_7 + "</a></li><li><a href='#8' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_8) + "\")'>" 
-            + data.trends.trend_8 + "</a></li><li><a href='#9' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_9) + "\")'>" 
-            + data.trends.trend_9 + "</a></li><li><a href='#10' onClick='trendClicked(\"" + replaceSpecialCharacters(data.trends.trend_10)+"\")'>" 
-            + data.trends.trend_10 + "</a></li></ul>"; 
+                            "<ul><li <a href='#1' onClick='trendClicked(\"" + (data[0].trend) + "\")'>" 
+            + (data[0].trend) + "</a></li><li <a href='#2' onClick='trendClicked(\""  + (data[1].trend) + "\")'>" 
+            + (data[1].trend) + "</a></li><li <a href='#3' onClick='trendClicked(\""  + (data[2].trend) + "\")'>" 
+            + (data[2].trend) + "</a></li><li <a href='#4' onClick='trendClicked(\""  + (data[3].trend) + "\")'>" 
+            + (data[3].trend) + "</a></li><li <a href='#5' onClick='trendClicked(\""  + (data[4].trend) + "\")'>" 
+            + (data[4].trend) + "</a></li><li <a href='#6' onClick='trendClicked(\""  + (data[5].trend) + "\")'>" 
+            + (data[5].trend) + "</a></li><li <a href='#7' onClick='trendClicked(\""  + (data[6].trend) + "\")'>" 
+            + (data[6].trend) + "</a></li><li <a href='#8' onClick='trendClicked(\""  + (data[7].trend) + "\")'>" 
+            + (data[7].trend) + "</a></li><li <a href='#9' onClick='trendClicked(\""  + (data[8].trend) + "\")'>" 
+            + (data[8].trend) + "</a></li><li <a href='#10' onClick='trendClicked(\"" + (data[9].trend)+"\")'>" 
+            + (data[9].trend) + "</a></li></ul>"; 
           },
           function(status) {
             alert('Something went wrong.'); //shit hit the fan!
@@ -71,7 +83,11 @@ $(function($){
 
 function trendClicked( mystring )
 { 
-  getJSON('http://localhost/~thomashenryspiteri/sw-trendack/assets/json-samples/json_tweets4trend.php'
+  var url = "http://localhost/foo/jason.php";
+  url = url + "?trend=";
+  url = url + mystring.replace("#", "%23");
+
+  getJSON(url
           ,function(data) {
             document.getElementById("tweets-for").textContent =  "Tweets for " + replaceNormalCharacters(mystring);
             
@@ -79,10 +95,10 @@ function trendClicked( mystring )
             document.getElementById("tweets-list-element").innerHTML = "";
 
             //Load new tweets and add them to the list
-            for( i = 0; i < data.tweet4trend.tweet.length; i++ )
+            for( i = 0; i < data.length; i++ )
             {
               var node = document.createElement("li");
-              var textnode = document.createTextNode( data.tweet4trend.tweet[i].text );
+              var textnode = document.createTextNode( data[i].text );
               
               node.appendChild(textnode);
               document.getElementById("tweets-list-element").appendChild(node);
@@ -92,12 +108,6 @@ function trendClicked( mystring )
             alert('Something went wrong.'); //in case of error
           });
 }
-
-function replaceSpecialCharacters( mystring )  
-{ return mystring.replace(/#/g, "&#35;").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
-
-function replaceNormalCharacters( mystring )
-{ return mystring.replace("&#35;", "#").replace("&amp;", "&").replace("&gt;", ">").replace("&lt;", "<").replace("&quot;", "\""); }
 
 //Not mine found it on internet to execute the HTTP
 var getJSON = function(url, successHandler, errorHandler) {

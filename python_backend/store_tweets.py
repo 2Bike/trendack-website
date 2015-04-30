@@ -60,7 +60,7 @@ def store(names, woeid):
 
 	    coord = "" + place[0] + "," + place[1] + ",150mi"
 			
-	    results = api.search(q = row[1], geocode = coord, result_type="recent", count=10 )
+	    results = api.search(q = row[1], geocode = coord, result_type="recent", count=30 )
 			
 			
 
