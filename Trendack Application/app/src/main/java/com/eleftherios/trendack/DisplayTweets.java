@@ -2,16 +2,14 @@ package com.eleftherios.trendack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -23,16 +21,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DisplayTrends extends ListActivity {
+public class DisplayTweets extends ListActivity {
 
-    TextView country;
+    TextView trend;
 
     private ProgressDialog dialog;
-
-    public String selected_country;
+    public String selected_trend;
 
     // Hashmap for ListView
-    ArrayList<HashMap<String, String>> trendList;
+    ArrayList<HashMap<String, String>> tweetList;
 
 
     @Override
@@ -45,33 +42,31 @@ public class DisplayTrends extends ListActivity {
 
         setContentView(R.layout.activity_display_trends);
 
-        trendList = new ArrayList<>();
+        tweetList = new ArrayList<>();
 
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
 
-            selected_country = extras.getString("Country");
-            country = (TextView) findViewById(R.id.selected_country);
-            country.setText("People On " + selected_country + " Are Talking About");
+            selected_trend = extras.getString("Trend");
+            trend = (TextView) findViewById(R.id.selected_country);
+            trend.setText("Popular Tweets About " + selected_trend);
         }
 
-        selected_country = selected_country.replace(" ", "+");
+        selected_trend = selected_trend.replace(" ", "+");
+        selected_trend = selected_trend.replace("#", "%23");
 
         try {
-            new GetTrends().execute();
+            new GetTweets().execute();
         }
         catch (Exception e) {
             Toast.makeText(getApplicationContext(), "No Network Access", Toast.LENGTH_LONG).show();
+            finish();
         }
-
     }
-    /**
-     * Async task class to get json by making HTTP call
-     * */
-    private class GetTrends extends AsyncTask<Void, Void, Void> {
 
-        public String selected_trend;
+    private class GetTweets extends AsyncTask<Void, Void, Void> {
+
         ListView lv = getListView();
 
         @Override
@@ -79,23 +74,22 @@ public class DisplayTrends extends ListActivity {
             super.onPreExecute();
 
             // Showing progress dialog
-            dialog = new ProgressDialog(DisplayTrends.this);
-            dialog.setMessage("Duck is getting the trends");
-            dialog.setCancelable(true);
+            dialog = new ProgressDialog(DisplayTweets.this);
+            dialog.setMessage("Duck is getting the tweets");
+            dialog.setCancelable(false);
             dialog.show();
 
         }
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            int j;
 
             // Creating service handler class instance
             ServiceHandler sh = new ServiceHandler();
 
             String jsonStr;
 
-            jsonStr = sh.makeServiceCall("http://192.168.1.64/foo/jason.php?country=" + selected_country , ServiceHandler.GET);
+            jsonStr = sh.makeServiceCall("http://192.168.1.64/foo/jason.php?trend=" + selected_trend, ServiceHandler.GET);
 
             if (jsonStr != null) {
                 try {
@@ -111,19 +105,17 @@ public class DisplayTrends extends ListActivity {
                         // Get individual JSON object from JSON array
                         JSONObject jo = ja.getJSONObject(i);
 
+                        // Retrieve each JSON object's fields
+                        String name = jo.getString("text");
 
+                        // Temporary Hashmap for single tweet
+                        HashMap<String, String> tweet = new HashMap<>();
 
-                            String name = jo.getString("trend");
+                        // adding each tweet node to HashMap key => name
+                        tweet.put("name", name);
 
-                            // Temporary Hashmap for single trend
-                            HashMap<String, String> trend = new HashMap<>();
-
-                            // Adding each Trend node to HashMap key => name
-                            trend.put("name", name);
-
-                            // Adding trend to trend list
-                            trendList.add(trend);
-
+                        // Adding tweet to tweet list
+                        tweetList.add(tweet);
                     }
                 }
                 catch (JSONException e) {
@@ -138,27 +130,19 @@ public class DisplayTrends extends ListActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            // Dismiss the progress dialog
+           // Dismiss the progress dialog
             if (dialog.isShowing())
                 dialog.dismiss();
 
             ListAdapter adapter = new SimpleAdapter(
-                    DisplayTrends.this, trendList,
-                    R.layout.trend_list_item, new String[]{"name"}, new int[]{R.id.trend});
+                    DisplayTweets.this, tweetList,
+                    R.layout.tweet_list_item, new String[]{"name"}, new int[]{R.id.tweet});
 
             setListAdapter(adapter);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-
-                    selected_trend = lv.getItemAtPosition(position).toString();
-                    selected_trend = selected_trend.substring(6, selected_trend.length()-1);
-
-                    Intent intent = new Intent(getApplicationContext(), DisplayTweets.class);
-                    intent.putExtra("Trend",selected_trend);
-
-                    startActivity(intent);
                 }
             });
 

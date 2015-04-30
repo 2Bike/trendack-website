@@ -1,23 +1,28 @@
 package com.eleftherios.trendack;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 
 public class MainActivity extends ActionBarActivity {
 
+    public String selected_country;
     ListView listView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         // Get ListView object from xml
@@ -25,7 +30,50 @@ public class MainActivity extends ActionBarActivity {
 
         // Defined Array values to show in ListView
         String[] values = new String[] {
-                "Albania", "Bulgaria","Croatia", "Denmark", "England", "FYROM", "Greece", "Haiti", "India", "Jamaica", "Korea", "Latvia", "Malta <3"
+                "Albania",
+                "Andorra",
+                "Austria",
+                "Belarus",
+                "Belgium",
+                "Bosnia and Herzegovina",
+                "Bulgaria",
+                "Croatia",
+                "Czech Republic",
+                "Denmark",
+                "Estonia",
+                "Finland",
+                "France",
+                "Germany",
+                "Greece",
+                "Hungary",
+                "Iceland",
+                "Ireland",
+                "Italy",
+                "Latvia",
+                "Liechtenstein",
+                "Lithuania",
+                "Luxembourg",
+                "Macedonia",
+                "Malta",
+                "Moldova",
+                "Monaco",
+                "Montenegro",
+                "Netherlands",
+                "Norway",
+                "Poland",
+                "Portugal",
+                "Romania",
+                "Russia",
+                "San Marino",
+                "Serbia",
+                "Slovakia",
+                "Slovenia",
+                "Spain",
+                "Sweden",
+                "Switzerland",
+                "Ukraine",
+                "United Kingdom"
+
         };
 
         // Define a new Adapter
@@ -35,7 +83,7 @@ public class MainActivity extends ActionBarActivity {
         // Forth - the Array of data
 
         ArrayAdapter adapter = new ArrayAdapter<>(this,
-                R.layout.list_item, R.id.list_content, values);
+                R.layout.country_list, R.id.list_content, values);
 
 
         // Assign adapter to ListView
@@ -52,13 +100,12 @@ public class MainActivity extends ActionBarActivity {
                 //int itemPosition     = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                selected_country    = (String) listView.getItemAtPosition(position);
 
+                Intent intent = new Intent(getApplicationContext(), DisplayTrends.class);
+                intent.putExtra("Country",selected_country);
+                startActivity(intent);
 
-                startActivity(new Intent(getApplicationContext(), DisplayTrends.class));
-
-
-                Toast.makeText(getApplicationContext(),itemValue, Toast.LENGTH_LONG).show();
             }
 
         });
