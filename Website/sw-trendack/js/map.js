@@ -54,8 +54,13 @@ $(function($){
           document.getElementById("trends-at").textContent = "Trends at " + text;
           
           //Hits the JSON service and created the 10-trend list
-          var url = "http://localhost/foo/jason.php";
-        
+          //Change here your own host
+		  //
+		  ///////////////////////////
+		  //*************************
+		  
+		  var url = "http://xxxxxx.xx/EiPiAi/jason.php";
+		  
           url = url + "?country=";
           url = url + text;
           
@@ -83,7 +88,13 @@ $(function($){
 
 function trendClicked( mystring )
 { 
-  var url = "http://localhost/foo/jason.php";
+  //Change here your own host
+  //
+  ///////////////////////////
+  //*************************
+  
+  var url = "http://xxxxxx.xx/EiPiAi/jason.php";
+  
   url = url + "?trend=";
   url = url + mystring.replace("#", "%23");
 
