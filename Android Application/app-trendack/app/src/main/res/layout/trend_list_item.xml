@@ -4,10 +4,10 @@
     android:layout_height="fill_parent">
 
     <TextView
-        android:id="@+id/tweet"
-        android:textColor="#FFFFFF"
+        android:id="@+id/trend"
+        android:textColor="#38362f"
         android:layout_margin="20dip"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

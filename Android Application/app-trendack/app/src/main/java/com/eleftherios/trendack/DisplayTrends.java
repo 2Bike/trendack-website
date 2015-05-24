@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
@@ -49,6 +48,7 @@ public class DisplayTrends extends ListActivity {
 
         Bundle extras = getIntent().getExtras();
 
+        //Get the country user clicked
         if (extras != null) {
 
             selected_country = extras.getString("Country");
@@ -56,6 +56,7 @@ public class DisplayTrends extends ListActivity {
             country.setText("People On " + selected_country + " Are Talking About");
         }
 
+        //Replace Spaces
         selected_country = selected_country.replace(" ", "+");
 
         try {
@@ -66,9 +67,7 @@ public class DisplayTrends extends ListActivity {
         }
 
     }
-    /**
-     * Async task class to get json by making HTTP call
-     * */
+
     private class GetTrends extends AsyncTask<Void, Void, Void> {
 
         public String selected_trend;
@@ -88,14 +87,13 @@ public class DisplayTrends extends ListActivity {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            int j;
 
             // Creating service handler class instance
             ServiceHandler sh = new ServiceHandler();
 
             String jsonStr;
 
-            jsonStr = sh.makeServiceCall("http://192.168.1.64/foo/jason.php?country=" + selected_country , ServiceHandler.GET);
+            jsonStr = sh.makeServiceCall("http://192.168.1.64/foo/jason.php?country=" + selected_country, ServiceHandler.GET);
 
             if (jsonStr != null) {
                 try {
@@ -103,9 +101,9 @@ public class DisplayTrends extends ListActivity {
                     // Convert response string to JSON array
                     JSONArray ja = new JSONArray(jsonStr);
 
-                    // Looping through all trends
                     int n = ja.length();
 
+                    // Looping through all trends
                     for (int i = 0; i < n; i++) {
 
                         // Get individual JSON object from JSON array

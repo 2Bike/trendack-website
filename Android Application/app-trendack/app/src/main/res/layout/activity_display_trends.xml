@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#100c33"
+    android:background="#cbc9c2"
     tools:context="com.eleftherios.trendack.DisplayTrends">
 
     <TextView
@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center"
+        android:padding="10px"
         android:textSize="22sp"
         android:textStyle="italic|bold"
-        android:background="#4b0000"
+        android:background="#5c6d69"
         android:textColor="#FFFFFF"
         />
 

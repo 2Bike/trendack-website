@@ -25,8 +25,8 @@ public class ServiceHandler {
     }
     /**
      * Making service call
-     * @url - url to make request
-     * @method - http request method
+     * @url - URL to make request
+     * @method - HTTP request method
      */
 
      public String makeServiceCall(String url, int method) {
@@ -34,9 +34,9 @@ public class ServiceHandler {
     }
     /**
      * Making service call
-     * @url - url to make request
-     * @method - http request method
-     * @params - http request params
+     * @url - URL to make request
+     * @method - HTTP request method
+     * @params - HTTP request params
      * */
     public String makeServiceCall(String url, int method,
                                   List<NameValuePair> params) {
@@ -44,7 +44,7 @@ public class ServiceHandler {
 
             // HTTP client
             DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpEntity httpEntity = null;
+            HttpEntity httpEntity;
             HttpResponse httpResponse = null;
 
             // Checking HTTP request method type
@@ -62,8 +62,7 @@ public class ServiceHandler {
 
                 // appending params to url
                 if (params != null) {
-                    String paramString = URLEncodedUtils
-                            .format(params, "utf-8");
+                    String paramString = URLEncodedUtils.format(params, "utf-8");
                     url += "?" + paramString;
                 }
 

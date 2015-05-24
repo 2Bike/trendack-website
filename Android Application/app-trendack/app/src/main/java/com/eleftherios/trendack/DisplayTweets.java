@@ -46,6 +46,7 @@ public class DisplayTweets extends ListActivity {
 
         Bundle extras = getIntent().getExtras();
 
+        //Get the trend user clicked
         if (extras != null) {
 
             selected_trend = extras.getString("Trend");
@@ -53,6 +54,7 @@ public class DisplayTweets extends ListActivity {
             trend.setText("Popular Tweets About " + selected_trend);
         }
 
+        //Remove spaces and replacing hashtags
         selected_trend = selected_trend.replace(" ", "+");
         selected_trend = selected_trend.replace("#", "%23");
 
@@ -97,9 +99,10 @@ public class DisplayTweets extends ListActivity {
                     // Convert response string to JSON array
                     JSONArray ja = new JSONArray(jsonStr);
 
-                    // Looping through all trends
+
                     int n = ja.length();
 
+                    // Looping through all tweets
                     for (int i = 0; i < n; i++) {
 
                         // Get individual JSON object from JSON array
@@ -111,7 +114,7 @@ public class DisplayTweets extends ListActivity {
                         // Temporary Hashmap for single tweet
                         HashMap<String, String> tweet = new HashMap<>();
 
-                        // adding each tweet node to HashMap key => name
+                        // Adding each tweet node to HashMap key => name
                         tweet.put("name", name);
 
                         // Adding tweet to tweet list

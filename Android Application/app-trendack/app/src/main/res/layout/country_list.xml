@@ -4,8 +4,9 @@
     android:layout_height="fill_parent">
 
     <TextView
-        android:id="@+id/trend"
-        android:textColor="#FFFFFF"
+        android:id="@+id/list_content"
+        android:textColor="#38362f"
+        android:gravity="center"
         android:layout_margin="20dip"
         android:textSize="20sp"
         android:layout_width="match_parent"

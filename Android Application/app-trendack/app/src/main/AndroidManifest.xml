@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".DisplayTweets"
-            android:label="@string/title_activity_display_tweets" >
+            android:label="DisplayTweets" >
         </activity>
     </application>
 

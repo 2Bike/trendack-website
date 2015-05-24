@@ -2,12 +2,13 @@
     android:gravity="center_vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <!-- Defining where should text be placed. You set you text color here-->
+
     <TextView
-        android:id="@+id/list_content"
-        android:textColor="#FFFFFF"
-        android:layout_margin="20dip"
-        android:textSize="20sp"
+        android:id="@+id/tweet"
+        android:textColor="#38362f"
+        android:padding="5px"
+        android:layout_margin="40dip"
+        android:textSize="25sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

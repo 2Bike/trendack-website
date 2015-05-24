@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#100c33">
+    android:background="#cbc9c2">
 
     <TextView
         android:id="@+id/select_country"
@@ -9,10 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center"
+        android:padding="10px"
         android:text="Select The Country You Want To Check The Trends About"
         android:textSize="22sp"
         android:textStyle="italic|bold"
-        android:background="#4b0000"
+        android:background="#5c6d69"
         android:textColor="#FFFFFF"
         />
 
@@ -22,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/select_country"
         android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:textColor="#FFFFFF">
     </ListView>
 
